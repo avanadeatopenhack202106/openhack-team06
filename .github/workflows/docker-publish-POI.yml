@@ -1,4 +1,4 @@
-name: Docker
+name: docker_publish_poi
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -7,10 +7,9 @@ name: Docker
 
 on:
   workflow_dispatch:
-    
-#  push:
-#    branches: '*'
-#    paths: [ 'apis/poi/**' ]
+  push:
+    branches: '*'
+    paths: [ 'apis/poi/**' ]
     
 env:
   # Use docker.io for Docker Hub if empty
