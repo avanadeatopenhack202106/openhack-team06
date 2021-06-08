@@ -2,6 +2,7 @@ name: .NET
 
 on:
   push:
+    branches: '*'
     paths:
     - 'apis/poi/**'
   pull_request:
