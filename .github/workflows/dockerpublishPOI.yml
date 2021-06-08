@@ -60,6 +60,6 @@ jobs:
         file: apis/poi/web/Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
         tags: | #${{ github.run_number }} #'1.0.0' # 
-            docker.pkg.github.com/${{ github.repository }}/octo-image:${{ github.sha }}
-            docker.pkg.github.com/${{ github.repository }}/octo-image:${{ github.run_number }}
+            docker.pkg.github.com/${{ github.repository }}/my-driving-poi:${{ github.sha }}
+            docker.pkg.github.com/${{ github.repository }}/my-driving-poi:${{ github.run_number }}
         labels: ${{ steps.meta.outputs.labels }}
