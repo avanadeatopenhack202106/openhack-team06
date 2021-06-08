@@ -7,7 +7,7 @@ name: Docker
 
 on:
   push:
-    branches: [ '*' ]
+    branches: [ joujma-patch-1 ]
     
 env:
   # Use docker.io for Docker Hub if empty
