@@ -7,7 +7,7 @@ name: Docker
 
 on:
   push:
-    branches: [ joujma-patch-1 ]
+    branches: '*'
     paths: [ 'apis/poi/**' ]
   workflow_dispatch: 
     
