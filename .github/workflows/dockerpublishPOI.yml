@@ -8,7 +8,6 @@ name: docker_publish_poi
 on:
   workflow_dispatch:
   push:
-    branches: '*'
     paths: [ 'apis/poi/**', '.github' ]
     
 env:
