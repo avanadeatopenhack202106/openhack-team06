@@ -20,7 +20,7 @@ jobs:
         dotnet-version: 2.1.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: /apis/poi
+      working-directory: apis/poi
     - name: Build
       run: dotnet build --no-restore
       working-directory: apis/poi
