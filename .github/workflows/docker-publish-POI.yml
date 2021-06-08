@@ -9,6 +9,7 @@ on:
   push:
     branches: [ joujma-patch-1 ]
     paths: [ 'apis/poi/**' ]
+  workflow_dispatch: 
     
 env:
   # Use docker.io for Docker Hub if empty
