@@ -6,9 +6,11 @@ name: Docker
 # documentation.
 
 on:
-  push:
-    branches: '*'
-    paths: [ 'apis/poi/**' ]
+  workflow_dispatch:
+    
+#  push:
+#    branches: '*'
+#    paths: [ 'apis/poi/**' ]
     
 env:
   # Use docker.io for Docker Hub if empty
