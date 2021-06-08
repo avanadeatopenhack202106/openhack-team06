@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
   push:
     branches: '*'
-    paths: [ 'apis/poi/**' ]
+    paths: [ 'apis/poi/**', '.github' ]
     
 env:
   # Use docker.io for Docker Hub if empty
