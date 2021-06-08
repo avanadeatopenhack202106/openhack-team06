@@ -1,5 +1,5 @@
 
-# POI Service trigger Test !master - workflowdispatch
+# POI Service trigger Test
 
 ## Overview
 
