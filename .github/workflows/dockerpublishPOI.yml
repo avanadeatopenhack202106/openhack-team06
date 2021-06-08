@@ -6,10 +6,9 @@ name: docker_publish_poi
 # documentation.
 
 on:
-  workflow_dispatch:
-  push:
-    paths: [ 'apis/poi/**', '.github' ]
-    
+  workflow_dispatch: 
+  push: 
+
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
