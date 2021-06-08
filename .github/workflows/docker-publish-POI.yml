@@ -10,7 +10,6 @@ on:
     branches:
       - '!master'
     paths: [ 'apis/poi/**' ]
-  workflow_dispatch:
     
     
 env:
