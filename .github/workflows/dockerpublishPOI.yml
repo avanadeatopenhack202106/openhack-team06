@@ -7,7 +7,12 @@ name: docker_publish_poi
 
 on:
   workflow_dispatch: 
-  push: 
+    inputs:
+      image_name:
+        description: 'image_name' 
+        required: true
+        default: 'my-driving-poi'
+
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -53,5 +58,5 @@ jobs:
         context: apis/poi/web/
         file: apis/poi/web/Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ github.run_number }}
         labels: ${{ steps.meta.outputs.labels }}
