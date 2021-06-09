@@ -35,6 +35,6 @@ jobs:
       # if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
       uses: benc-uk/workflow-dispatch@v1
       with:
-        workflow: Another Workflow
-        token: ${{ secrets.GITHUB_TOKEN }}
+        workflow: 'publish-docker-image'
+        token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/poi/web" }'
