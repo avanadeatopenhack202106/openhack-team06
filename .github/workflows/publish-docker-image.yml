@@ -19,7 +19,7 @@ on:
       webapp_name:
         description: ''
         required: true
-        default: 'openhackrvp3hz11poi'
+        default: 'openhackrvp3hz11poi-staging'
 
 env:
   # Use docker.io for Docker Hub if empty
