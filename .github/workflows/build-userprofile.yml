@@ -34,4 +34,4 @@ jobs:
       with:
         workflow: 'publishdockerimage'
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile" }'
+        inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile", "webapp_name": "openhackrvp3hz11userprofile" }'
