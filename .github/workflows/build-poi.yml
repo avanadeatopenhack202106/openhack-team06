@@ -31,8 +31,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
-    - name: Invoke workflow with inputs
-      if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+    - name: Build and publish Docker Image for API
+      # if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: Another Workflow
