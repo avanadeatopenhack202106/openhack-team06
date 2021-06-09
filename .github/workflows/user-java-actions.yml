@@ -32,3 +32,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
+    - name: Build and publish Docker Image for API
+      if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: 'publishdockerimage'
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "image_name": "my-driving-user-java", "docker_context": "apis/user-java" }'
