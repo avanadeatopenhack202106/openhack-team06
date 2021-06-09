@@ -1,0 +1,41 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: user-java
+
+on:
+  push:
+    paths: [ 'apis/user-java/**' ]
+  pull_request:
+    branches: [ master ]
+    paths: [ 'apis/user-java/**' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Maven 
+      working-directory: apis/user-java
+      run: mvn -B package --file pom.xml
+    - name: Test with Maven 
+      working-directory: apis/user-java
+      run: mvn test -B package --file pom.xml
+    - uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ failure() }}
+    - name: Build and publish Docker Image for API
+      if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: 'publishdockerimage'
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "image_name": "my-driving-user-java", "docker_context": "apis/user-java" }'
