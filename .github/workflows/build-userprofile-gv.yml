@@ -1,0 +1,42 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: gv-userprofil CI
+
+on:
+  push:
+    paths: [ 'apis/userprofile/**' ]
+  pull_request:
+    branches: [ master ]
+    paths: [ 'apis/userprofile/**' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    - uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ failure() }}
+    - name: Build and publish Docker Image for API
+      # if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: 'publishdockerimage'
+        token: ${{ secrets.PERSONAL_TOKEN }}
+        inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/userprofile/" }'
