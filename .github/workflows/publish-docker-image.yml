@@ -77,7 +77,20 @@ jobs:
       with:
         app-name: ${{github.event.inputs.webapp_name}}
         images: docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
+        
+    # check API code 200
+    - name: check API is running
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://openhackrvp3hz11poi-staging.azurewebsites.net/api/healthcheck/poi'
+        method: 'GET'
+        
+    # swap to production slot
+    - name: swap deployment slot
+      run: |
+        az webapp deployment slot swap -g openhackrvp3hz11rg -n openhackrvp3hz11poi --slot staging --target-slot production
     
     - name: Azure logout
       run: |
         az logout
+      if: ${{always()}}  
