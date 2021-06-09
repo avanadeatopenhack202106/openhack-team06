@@ -1,0 +1,35 @@
+name: 'userprofile API'
+
+on:
+  push:
+    paths: [ 'apis/userprofile/**' ]
+  pull_request:
+    branches: [ master ]
+    paths: [ 'apis/userprofile/**' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+    - uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      if: ${{ failure() }}
+    - name: Build and publish Docker Image for API
+      # if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: 'publish-docker-image'
+        token: ${{ secrets.GITHUB_TOKEN }}
+        inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/poi/web" }'
