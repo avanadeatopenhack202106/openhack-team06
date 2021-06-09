@@ -38,6 +38,6 @@ apps/ @octocat
 *.ps1 @eagdra
 *.md @odeatavanade
 /apis/poi @marinmalo
-/apis/trips @joujma
+/apis/trips @bilelmarouen
 /apis/user-java @NicolasBarr
 /apis/profile @charb80
