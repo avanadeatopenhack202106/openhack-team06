@@ -31,4 +31,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
-    
+    - name: Invoke workflow with inputs
+      if: ${{ success() && github.GITHUB_REF == "refs/heads/master"}}
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: Another Workflow
+        token: ${{ secrets.GITHUB_TOKEN }}
+        inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/poi/web" }'
