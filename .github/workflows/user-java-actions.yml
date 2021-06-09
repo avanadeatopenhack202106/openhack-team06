@@ -25,6 +25,9 @@ jobs:
     - name: Build with Maven 
       working-directory: apis/user-java
       run: mvn -B package --file pom.xml
+    - name: Test with Maven 
+      working-directory: apis/user-java
+      run: mvn test -B package --file pom.xml
     - uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
