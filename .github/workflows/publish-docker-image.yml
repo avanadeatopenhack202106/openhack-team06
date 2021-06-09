@@ -100,8 +100,7 @@ jobs:
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: ${{ github.run_number }}
-        title: "Deployed POI version"
-        files: release.md
+        title: 'Deployed POI version'
     
     - name: Azure logout
       run: |
