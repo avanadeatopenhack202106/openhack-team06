@@ -29,6 +29,6 @@ jobs:
         with:
           version: latest
           args: release --rm-dist
-          workdir: /apis/trips/tripsgo
+          workdir: /apis/trips
         env:
           GITHUB_TOKEN: ${{ secrets.GO_RELEASER_GITHUB_TOKEN }}
