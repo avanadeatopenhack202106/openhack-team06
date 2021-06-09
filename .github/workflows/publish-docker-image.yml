@@ -6,20 +6,21 @@ name: docker_publish_poi
 # documentation.
 
 on:
-  push:
-  workflow_dispatch: 
+  workflow_dispatch:
     inputs:
       image_name:
-        description: 'image_name' 
+        description: 'image_name'
         required: true
         default: 'my-driving-poi'
-
+      docker_context:
+        description: ''
+        required: true
+        default: 'api/poi/web'
 
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: docker.pkg.github.com
   # github.repository as <account>/<repo>
-  IMAGE_NAME: mydrivingpoi
 
 jobs:
   build:
@@ -42,23 +43,22 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    # Extract metadata (tags, labels) for Docker
-    # https://github.com/docker/metadata-action
-    - name: Extract Docker metadata
-      id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
+    # # Extract metadata (tags, labels) for Docker
+    # # https://github.com/docker/metadata-action
+    # - name: Extract Docker metadata
+    #   id: meta
+    #   uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+    #   with:
+    #     images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
     # Build and push Docker image with Buildx (don't push on PR)
     # https://github.com/docker/build-push-action
     - name: Build and push Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
-        context: apis/poi/web/
-        file: apis/poi/web/Dockerfile
+        context: ${{ github.event.inputs.docker_context}}
         push: ${{ github.event_name != 'pull_request' }}
-        tags: | 
-            docker.pkg.github.com/${{ github.repository }}/my-driving-poi:${{ github.run_number }}
+        tags: |
+            docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
+            docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.sha }}
         labels: ${{ steps.meta.outputs.labels }}
