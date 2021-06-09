@@ -17,7 +17,7 @@ on:
 
 env:
   # Use docker.io for Docker Hub if empty
-  REGISTRY: docker.pkg.github.com # ghcr.io
+  REGISTRY: docker.pkg.github.com
   # github.repository as <account>/<repo>
   IMAGE_NAME: mydrivingpoi
 
@@ -59,7 +59,6 @@ jobs:
         context: apis/poi/web/
         file: apis/poi/web/Dockerfile
         push: ${{ github.event_name != 'pull_request' }}
-        tags: | #${{ github.run_number }} #'1.0.0' # 
-            docker.pkg.github.com/${{ github.repository }}/my-driving-poi:${{ github.sha }}
+        tags: | 
             docker.pkg.github.com/${{ github.repository }}/my-driving-poi:${{ github.run_number }}
         labels: ${{ steps.meta.outputs.labels }}
