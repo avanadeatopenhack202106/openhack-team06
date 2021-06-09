@@ -36,5 +36,5 @@ jobs:
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: 'publish-docker-image'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/poi/web" }'
