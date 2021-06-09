@@ -24,6 +24,8 @@ jobs:
       working-directory: apis/userprofile
     - run: npm test
       working-directory: apis/userprofile
+    - name: Display ref
+      run: echo '${{ github.GITHUB_REF }}'
     - uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

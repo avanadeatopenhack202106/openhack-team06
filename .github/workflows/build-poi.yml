@@ -31,8 +31,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
-    - name: Display ref
-      run: echo '${{ github.GITHUB_REF }}'
     - name: Build and publish Docker Image for API
       if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
       uses: benc-uk/workflow-dispatch@v1
