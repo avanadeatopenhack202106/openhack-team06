@@ -16,6 +16,10 @@ on:
         description: ''
         required: true
         default: 'api/poi/web'
+      webapp_name:
+        description: ''
+        required: true
+        default: 'openhackrvp3hz11poi'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -58,7 +62,22 @@ jobs:
       with:
         context: ${{ github.event.inputs.docker_context}}
         push: ${{ github.event_name != 'pull_request' }}
-        tags: |
-            docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
-            docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.sha }}
+        tags: docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
         labels: ${{ steps.meta.outputs.labels }}
+        
+        
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+      
+    - name: 'Deploy to WebApp'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{github.event.inputs.webapp_name}}
+        images: docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
+    
+    - name: Azure logout
+      run: |
+        az logout
