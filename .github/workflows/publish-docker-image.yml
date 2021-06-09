@@ -90,6 +90,18 @@ jobs:
     - name: swap deployment slot
       run: |
         az webapp deployment slot swap -g openhackrvp3hz11rg -n openhackrvp3hz11poi --slot staging --target-slot production
+        
+    - name: generate release file
+      run: |
+        echo ${{ github.run_number }} > release.md
+        
+    - name: create release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: ${{ github.run_number }}
+        title: "Deployed POI version"
+        files: release.md
     
     - name: Azure logout
       run: |
