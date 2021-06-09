@@ -19,7 +19,7 @@ on:
       webapp_name:
         description: ''
         required: true
-        default: 'openhackrvp3hz11poi-staging'
+        default: 'openhackrvp3hz11poi'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -75,6 +75,7 @@ jobs:
     - name: 'Deploy to WebApp'
       uses: azure/webapps-deploy@v2
       with:
+        slot-name: staging
         app-name: ${{github.event.inputs.webapp_name}}
         images: docker.pkg.github.com/${{ github.repository }}/${{ github.event.inputs.image_name}}:${{ github.run_number }}
         
