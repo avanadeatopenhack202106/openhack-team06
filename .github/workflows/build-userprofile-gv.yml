@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+        node-version: [8.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -34,9 +34,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
     - name: Build and publish Docker Image for API
-      # if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: 'publishdockerimage'
         token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/userprofile/" }'
+        inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile/" }'
