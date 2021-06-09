@@ -37,7 +37,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ failure() }}
     - name: Build and publish Docker Image for API
-      if: ${{ success() && github.GITHUB_REF == 'refs/heads/master'}}
+      if: ${{ success() && github.ref == 'refs/heads/master'}}
       uses: benc-uk/workflow-dispatch@v1
       with:
         workflow: 'publishdockerimage'
