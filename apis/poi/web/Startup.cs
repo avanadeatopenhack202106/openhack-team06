@@ -15,6 +15,8 @@ using poi.Data;
 using poi.Utility;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.Channel;
 
 namespace poi
 {
@@ -46,6 +48,7 @@ namespace poi
                 c.SwaggerDoc("docs", new Info { Title = "Points Of Interest(POI) API", Version = "v1" });
             });
             services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
+            TelemetryConfiguration.Active.TelemetryInitializers.Add(new ServiceNameInitializer());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,4 +79,15 @@ namespace poi
             app.UseMvc();
         }
     }
+
+    public class ServiceNameInitializer : ITelemetryInitializer
+    {
+        public void Initialize(ITelemetry telemetry)
+        {
+            telemetry.Context.Cloud.RoleName = "POI_API";
+            // RoleInstance property modifies the app name in the telmetry dashboard
+            telemetry.Context.Cloud.RoleInstance = "POI_API";
+        }
+    }
+
 }
