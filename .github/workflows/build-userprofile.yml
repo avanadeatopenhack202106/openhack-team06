@@ -35,3 +35,31 @@ jobs:
         workflow: 'publishdockerimage'
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile", "webapp_name": "openhackrvp3hz11userprofile" }'
+
+  code_coverage:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: debug code coverage test
+      run: echo 'executed code coverage'
+
+  sonarcloud_scan:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+  deploy:
+    needs: [code_coverage,sonarcloud_scan]
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy
+      run: echo 'execute deploy'
