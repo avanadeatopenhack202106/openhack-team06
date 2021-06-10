@@ -7,6 +7,12 @@ on:
     branches: [ master ]
     paths: [ 'apis/userprofile/**' ]
 
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.pkg.github.com
+  # github.repository as <account>/<repo>
+
 jobs:
   build:
 
@@ -60,10 +66,52 @@ jobs:
     needs: [code_coverage,sonarcloud_scan]
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Log into registry ${{ env.REGISTRY }}
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
     - name: Build and publish Docker Image for API
       if: ${{ success() && github.ref == 'refs/heads/master' }}
       #uses: benc-uk/workflow-dispatch@v1
+      #with:
+      #  workflow: 'publishdockerimage'
+      #  token: ${{ secrets.PERSONAL_TOKEN }}
+      #  inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile", "webapp_name": "openhackrvp3hz11userprofile" }'
+      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
       with:
-        workflow: 'publishdockerimage'
-        token: ${{ secrets.PERSONAL_TOKEN }}
-        inputs: '{ "image_name": "my-driving-userprofile", "docker_context": "apis/userprofile", "webapp_name": "openhackrvp3hz11userprofile" }'
+        context: apis/userprofile
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: docker.pkg.github.com/${{ github.repository }}/my-driving-userprofile:${{ github.run_number }}
+        labels: ${{ steps.meta.outputs.labels }}
+        
+
+  post_deploy1:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: post deploy 1
+      run: echo 'post deploy 1 activities here'    
+
+  post_deploy2:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: post deploy 2
+      run: echo 'post deploy 2 activities here' 
+
+
+  post_deploy3:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+    - name: post deploy 3
+      run: echo 'post deploy 3 activities here' 
+
+
