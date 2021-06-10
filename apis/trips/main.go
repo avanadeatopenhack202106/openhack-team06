@@ -6,8 +6,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
 	sw "github.com/Azure-Samples/openhack-devops-team/apis/trips/tripsgo"
+	"github.com/microsoft/ApplicationInsights-Go/appinsights"
 )
 
 var (
@@ -25,6 +27,17 @@ func getEnv(key, fallback string) string {
 func main() {
 
 	var debug, present = os.LookupEnv("DEBUG_LOGGING")
+	var aikey, present2 = os.LookupEnv("APPINSIGHTS_INSTRUMENTATIONKEY")
+
+	telemetryConfig := appinsights.NewTelemetryConfiguration(aikey)
+
+	// Configure how many items can be sent in one call to the data collector:
+	telemetryConfig.MaxBatchSize = 8192
+
+	// Configure the maximum delay before sending queued telemetry:
+	telemetryConfig.MaxBatchInterval = 2 * time.Second
+
+	client := appinsights.NewTelemetryClientFromConfig(telemetryConfig)
 
 	if present && debug == "true" {
 		sw.InitLogging(os.Stdout, os.Stdout, os.Stdout)
@@ -38,4 +51,5 @@ func main() {
 	router := sw.NewRouter()
 
 	sw.Fatal.Println(http.ListenAndServe(fmt.Sprintf("%s%s", ":", *webServerPort), router))
+
 }
