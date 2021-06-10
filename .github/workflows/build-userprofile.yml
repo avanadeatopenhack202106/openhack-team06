@@ -2,7 +2,7 @@ name: 'userprofile API'
 
 on:
   push:
-    paths: [ 'apis/userprofile/**' ]
+    #paths: [ 'apis/userprofile/**' ]
   pull_request:
     branches: [ master ]
     paths: [ 'apis/userprofile/**' ]
