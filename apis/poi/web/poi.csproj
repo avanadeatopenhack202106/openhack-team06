@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/619c8f07-eee7-4d17-887a-df528f9a9d8d/resourceGroups/openhackrvp3hz11rg/providers/microsoft.insights/components/openhackrvp3hz11ai</ApplicationInsightsResourceId>
+    <UserSecretsId>82e6bf44-9620-42c0-84bd-ecee6019ee00</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />

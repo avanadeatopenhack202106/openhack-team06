@@ -45,6 +45,7 @@ namespace poi
             {
                 c.SwaggerDoc("docs", new Info { Title = "Points Of Interest(POI) API", Version = "v1" });
             });
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
