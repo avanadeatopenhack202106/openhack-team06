@@ -53,3 +53,10 @@ jobs:
     steps:
     - name: sonar cloud scan
       run: echo 'exectued sonar scan'
+      
+  deploy:
+    needs: [code_coverage,sonarcloud_scan]
+    runs-on: ubuntu-latest
+    steps:
+    - name: deploy
+      run: echo 'execute deploy'
