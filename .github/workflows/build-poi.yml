@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -40,3 +39,17 @@ jobs:
         workflow: 'publishdockerimage'
         token: ${{ secrets.PERSONAL_TOKEN }}
         inputs: '{ "image_name": "my-driving-poi", "docker_context": "apis/poi/web", "webapp_name": "openhackrvp3hz11poi" }'
+
+  code_coverage:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: debug code coverage test
+      run: echo 'executed code coverage'
+
+  sonarcloud_scan:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: sonar cloud scan
+      run: echo 'exectued sonar scan'
