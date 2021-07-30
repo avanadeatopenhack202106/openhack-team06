@@ -1,0 +1,4 @@
+extraction:
+  csharp:
+    index:
+      solution: apis/poi/poi.sln
